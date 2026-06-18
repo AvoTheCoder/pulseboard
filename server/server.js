@@ -33,6 +33,22 @@ app.post("/api/auth/signin", async (req, res) => {
   res.json({ user: data.user, session: data.session });
 });
 
+app.post("/api/checkins", async (req, res) => {
+  const { yesterday, today, blockers, energy } = req.body;
+  const { data, error } = await supabase.from("checkins").insert({
+    yesterday: yesterday,
+    today: today,
+    blockers_text: blockers,
+    energy_level: energy,
+  });
+  if (error) {
+    console.log(error)
+    return res.status(400).json({ error: error.message });
+  }
+
+
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
