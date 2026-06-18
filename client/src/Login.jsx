@@ -20,6 +20,9 @@ function Login() {
 
         const data = await response.json()
         console.log(data)
+        if (data.user) {
+            navigate('/dashboard', { state: { email: data.user.email } })
+        }
 
 
     }
