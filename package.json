@@ -1,0 +1,17 @@
+{
+  "name": "react-prac",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -n client,server -c cyan,green \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+    "install:all": "npm install && npm install --prefix client && npm install --prefix server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "client": "^0.0.1",
+    "prefix": "^1.0.0",
+    "react-router-dom": "^7.18.0"
+  }
+}
