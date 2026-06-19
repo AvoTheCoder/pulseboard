@@ -1,1 +1,60 @@
 @import "tailwindcss";
+
+@theme {
+  --color-dark-900: #0a0a0f;
+  --color-dark-800: #12121a;
+  --color-dark-700: #1a1a2e;
+  --color-dark-600: #252540;
+  --color-dark-500: #2d2d4a;
+  --color-accent: #6c5ce7;
+  --color-accent-hover: #7c6ff7;
+  --color-accent-glow: rgba(108, 92, 231, 0.3);
+  --color-success: #00cec9;
+  --color-text-primary: #e8e8f0;
+  --color-text-secondary: #8888a8;
+  --color-text-muted: #5a5a78;
+  --color-border: #2a2a45;
+  --color-msg-mine: #6c5ce7;
+  --color-msg-theirs: #252540;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0a0a0f;
+  color: #e8e8f0;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(108, 92, 231, 0.4);
+  color: white;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a45;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a55;
+}
+
+input, textarea {
+  outline: none;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #5a5a78;
+}

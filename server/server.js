@@ -45,8 +45,27 @@ app.post("/api/checkins", async (req, res) => {
     console.log(error)
     return res.status(400).json({ error: error.message });
   }
+  res.json({ success: true, data });
+});
 
+app.post("/api/messages", async (req, res) => {
 
+  const { message, email } = req.body;
+  const { data, error } = await supabase.from("messages").insert({
+    text: message,
+    user_email: email
+  });
+  if (error) {
+    console.log(error)
+    return res.status(400).json({ error: error.message });
+  }
+  res.json({ success: true, data });
+
+})
+app.get("/api/messages", async (req, res) => {
+  const { data, error } = await supabase.from("messages").select("*").order('created_at', { ascending: true });
+  if (error) return res.status(400).json({ error: error.message });
+  res.json(data);
 });
 
 app.listen(PORT, () => {
