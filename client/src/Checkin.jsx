@@ -1,7 +1,6 @@
 import { useState } from "react"
 
-function Checkin() {
-
+function Checkin({ onComplete }) {
     const [form, setForm] = useState({
         yesterday: '',
         today: '',
@@ -10,9 +9,7 @@ function Checkin() {
     })
     const [step, setStep] = useState(0)
 
-
     const sendDatatoServer = async () => {
-
         const response = await fetch('http://localhost:3001/api/checkins', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -24,83 +21,118 @@ function Checkin() {
             })
         })
     }
+
     return (
-        <div className="flex flex-col justify-center items-center border border-black rounded-lg p-8 w-150 h-150">
+        <div className="flex-1 flex justify-center items-center">
+            <div className="flex flex-col justify-center items-center bg-dark-800 border border-border rounded-2xl p-12 w-[500px] shadow-2xl shadow-accent-glow/5">
 
-            {step === 0 && (
-                <>
-                    <h2 className="text-xl font-bold mb-4">Daily Check-in</h2>
-                    <button onClick={() => setStep(1)} className="text-white border border-black bg-blue-500 rounded-lg p-2 w-35 h-10 hover:bg-blue-600 transition-colors cursor-pointer mt-5">
-                        Start Now
-                    </button>
-                </>
-            )}
+                {step === 0 && (
+                    <>
+                        <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center text-3xl mb-6">✨</div>
+                        <h2 className="text-2xl font-bold text-text-primary mb-2">Daily Check-in</h2>
+                        <p className="text-text-muted text-sm mb-8">How's your day going?</p>
+                        <button
+                            onClick={() => setStep(1)}
+                            className="bg-accent hover:bg-accent-hover text-white font-semibold py-3 px-8 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-lg hover:shadow-accent-glow/20 active:scale-[0.98]"
+                        >
+                            Start Now
+                        </button>
+                    </>
+                )}
 
-            {step === 1 && (
-                <>
-                    <h2 className="text-xl font-bold mb-4">What did you do yesterday?</h2>
-                    <textarea
-                        className="border p-2 w-full"
-                        value={form.yesterday}
-                        onChange={(e) => setForm({ ...form, yesterday: e.target.value })}
-                    />
-                    <button onClick={() => setStep(2)} className="text-white border border-black bg-blue-500 rounded-lg p-2 w-35 h-10 hover:bg-blue-600 transition-colors cursor-pointer mt-5">
-                        Next
-                    </button>
-                </>
-            )}
+                {step === 1 && (
+                    <>
+                        <div className="flex items-center gap-2 mb-6">
+                            <span className="text-xs text-text-muted bg-dark-600 px-2 py-1 rounded-full">1 of 4</span>
+                        </div>
+                        <h2 className="text-xl font-bold text-text-primary mb-4">What did you do yesterday?</h2>
+                        <textarea
+                            className="w-full bg-dark-700 border border-border rounded-lg p-3 text-text-primary text-sm min-h-[120px] resize-none focus:border-accent transition-colors"
+                            value={form.yesterday}
+                            onChange={(e) => setForm({ ...form, yesterday: e.target.value })}
+                            placeholder="Describe your progress..."
+                        />
+                        <button
+                            onClick={() => setStep(2)}
+                            className="mt-6 bg-accent hover:bg-accent-hover text-white font-semibold py-3 px-8 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-lg hover:shadow-accent-glow/20 active:scale-[0.98]"
+                        >
+                            Next →
+                        </button>
+                    </>
+                )}
 
-            {step === 2 && (
-                <>
-                    <h2 className="text-xl font-bold mb-4">What are you doing today?</h2>
-                    <textarea
-                        className="border p-2 w-full"
-                        value={form.today}
-                        onChange={(e) => setForm({ ...form, today: e.target.value })}
-                    />
-                    <button onClick={() => setStep(3)} className="text-white border border-black bg-blue-500 rounded-lg p-2 w-35 h-10 hover:bg-blue-600 transition-colors cursor-pointer mt-5">
-                        Next
-                    </button>
-                </>
-            )}
+                {step === 2 && (
+                    <>
+                        <div className="flex items-center gap-2 mb-6">
+                            <span className="text-xs text-text-muted bg-dark-600 px-2 py-1 rounded-full">2 of 4</span>
+                        </div>
+                        <h2 className="text-xl font-bold text-text-primary mb-4">What are you doing today?</h2>
+                        <textarea
+                            className="w-full bg-dark-700 border border-border rounded-lg p-3 text-text-primary text-sm min-h-[120px] resize-none focus:border-accent transition-colors"
+                            value={form.today}
+                            onChange={(e) => setForm({ ...form, today: e.target.value })}
+                            placeholder="What's on your plate?"
+                        />
+                        <button
+                            onClick={() => setStep(3)}
+                            className="mt-6 bg-accent hover:bg-accent-hover text-white font-semibold py-3 px-8 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-lg hover:shadow-accent-glow/20 active:scale-[0.98]"
+                        >
+                            Next →
+                        </button>
+                    </>
+                )}
 
-            {step === 3 && (
-                <>
-                    <h2 className="text-xl font-bold mb-4">Any blockers?</h2>
-                    <textarea
-                        className="border p-2 w-full"
-                        value={form.blockers}
-                        onChange={(e) => setForm({ ...form, blockers: e.target.value })}
-                    />
-                    <button onClick={() => setStep(4)} className="text-white border border-black bg-blue-500 rounded-lg p-2 w-35 h-10 hover:bg-blue-600 transition-colors cursor-pointer mt-5">
-                        Next
-                    </button>
-                </>
-            )}
+                {step === 3 && (
+                    <>
+                        <div className="flex items-center gap-2 mb-6">
+                            <span className="text-xs text-text-muted bg-dark-600 px-2 py-1 rounded-full">3 of 4</span>
+                        </div>
+                        <h2 className="text-xl font-bold text-text-primary mb-4">Any blockers?</h2>
+                        <textarea
+                            className="w-full bg-dark-700 border border-border rounded-lg p-3 text-text-primary text-sm min-h-[120px] resize-none focus:border-accent transition-colors"
+                            value={form.blockers}
+                            onChange={(e) => setForm({ ...form, blockers: e.target.value })}
+                            placeholder="Anything blocking your progress?"
+                        />
+                        <button
+                            onClick={() => setStep(4)}
+                            className="mt-6 bg-accent hover:bg-accent-hover text-white font-semibold py-3 px-8 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-lg hover:shadow-accent-glow/20 active:scale-[0.98]"
+                        >
+                            Next →
+                        </button>
+                    </>
+                )}
 
-            {step === 4 && (
-                <>
-                    <h2 className="text-xl font-bold mb-4">Energy level (1-5)</h2>
-                    <input
-                        type="number"
-                        min="1"
-                        max="5"
-                        className="border p-2 w-20 text-center"
-                        value={form.energy}
-                        onChange={(e) => setForm({ ...form, energy: Number(e.target.value) })}
-                    />
-                    <button onClick={() => { sendDatatoServer(); setStep(step + 1); }} className="text-white border border-black bg-blue-500 rounded-lg p-2 w-35 h-10 hover:bg-blue-600 transition-colors cursor-pointer mt-5">
-                        Submit
-                    </button>
-                </>
-            )}
-            {step === 5 && (
-                <>
-                    <h2 className="text-xl font-bold mb-4">Thank You!</h2>
-
-                </>
-            )}
-
+                {step === 4 && (
+                    <>
+                        <div className="flex items-center gap-2 mb-6">
+                            <span className="text-xs text-text-muted bg-dark-600 px-2 py-1 rounded-full">4 of 4</span>
+                        </div>
+                        <h2 className="text-xl font-bold text-text-primary mb-4">Energy level</h2>
+                        <div className="flex gap-3 mb-6">
+                            {[1, 2, 3, 4, 5].map(level => (
+                                <button
+                                    key={level}
+                                    onClick={() => setForm({ ...form, energy: level })}
+                                    className={`w-12 h-12 rounded-xl font-bold text-lg cursor-pointer transition-all duration-200 ${
+                                        form.energy === level
+                                            ? 'bg-accent text-white shadow-lg shadow-accent-glow/30 scale-110'
+                                            : 'bg-dark-700 text-text-secondary border border-border hover:border-accent/50'
+                                    }`}
+                                >
+                                    {level}
+                                </button>
+                            ))}
+                        </div>
+                        <button
+                            onClick={async () => { await sendDatatoServer(); onComplete(); }}
+                            className="bg-success hover:brightness-110 text-white font-semibold py-3 px-8 rounded-lg cursor-pointer transition-all duration-200 hover:shadow-lg active:scale-[0.98]"
+                        >
+                            Submit ✓
+                        </button>
+                    </>
+                )}
+            </div>
         </div>
     )
 }
